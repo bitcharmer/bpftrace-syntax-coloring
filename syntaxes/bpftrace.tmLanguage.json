@@ -1,0 +1,211 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "bpftrace",
+    "scopeName": "source.bt",
+    "patterns": [
+      {
+        "include": "#shebang"
+      },
+      {
+        "include": "#preprocessor"
+      },
+      {
+        "include": "#comments"
+      },
+      {
+        "include": "#map"
+      },
+      {
+        "include": "#var"
+      },
+      {
+        "include": "#builtins"
+      },
+      {
+        "include": "#probeType"
+      },
+      {
+        "include": "#programArg"
+      },
+      {
+        "include": "#pred"
+      },
+      {
+        "include": "#keywords"
+      },
+      {
+        "include": "#operator"
+      },
+      {
+        "include": "#probe"
+      },
+      {
+        "include": "#strings"
+      },
+      {
+        "include": "#int"
+      },
+      {
+        "include": "#brace"
+      }
+    ],
+    "repository": {
+      "shebang": {
+        "patterns": [{
+          "name": "meta.shebang",
+          "begin": "^#!",
+          "end": "$"
+        }]
+      },
+      "preprocessor": {
+        "patterns": [{
+          "name": "meta.preprocessor",
+          "begin": "^#[^!]",
+          "end": "$"
+        }]
+      },
+      "builtins": {
+        "patterns": [
+          {
+            "name": "keyword.control.builtin.variable",
+            "match": "\\b(pid|tid|uid|gid|nsecs|cpu|comm|stack|ustack|arg[0-9]|retval|func|name|curtask|rand|cgroup)\\b"
+          },
+          {
+            "name": "keyword.control.builtin.function",
+            "match": "\\b(printf|time|join|str|buf|ksym|usym|kaddr|uaddr|reg|system|exit|cgroupid|kstack|ustack|ntop|cat|signal|strncmp|override|sizeof|print|strftime|path|uptr|kptr|macaddr)\\b"
+          },
+          {
+            "name": "keyword.control.builtin.mapfunction",
+            "match": "\\b(count|sum|avg|min|max|stats|hist|list|delete|print|clear|zero)\\b"
+          }
+        ]
+      },
+      "probeType": {
+        "patterns": [
+          {
+            "name": "support.type",
+            "match": "\\b(kprobe|kretprobe|uprobe|uretprobe|tracepoint|usdt|profile|interval|software|hardware|BEGIN|END|watchpoint|asyncwatchpoint|kfunc|kretfunc)\\b"
+          }
+        ]
+      },
+      "probe": {
+        "patterns": [
+          {
+            "name": "keyword.other",
+            "match": "([_a-zA-Z][_a-zA-Z0-9]+)"
+          }
+        ]
+      },
+      "programArg": {
+        "patterns": [
+          {
+            "name": "variable.parameter",
+            "match": "\\$\\d{1}"
+          }
+        ]
+      },
+      "pred": {
+        "patterns": [
+          {
+            "name": "keyword.other",
+            "match": "/[ \\r\\t\\n]*[/{]"
+          }
+        ]
+      },
+      "comments": {
+        "patterns": [
+          {
+            "name": "comment.block",
+            "begin": "/\\*",
+            "end": "\\*/"
+          },
+          {
+            "name": "comment.line",
+            "begin": "//",
+            "end": "\\n"
+          }
+        ]
+      },
+      "ident": {
+        "patterns": [{
+          "name": "variable.name",
+          "match": "[_a-zA-Z][_a-zA-Z0-9]*"
+        }]
+      },
+      "map": {
+        "patterns": [{
+          "name": "variable.name.map",
+          "match": "(@)([_a-zA-Z][_a-zA-Z0-9]*)?",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition"
+            }
+          }
+        }]
+      },
+      "var": {
+        "patterns": [{
+          "name": "variable.name.var",
+          "match": "(\\$)[_a-zA-Z][_a-zA-Z0-9]*",
+          "captures": {
+            "1": {
+              "name": "punctuation.definition"
+            }
+          }
+        }]
+      },
+      "keywords": {
+        "patterns": [
+          {
+            "name": "keyword.control",
+            "match": "\\b(if|else)\\b"
+          },
+          {
+            "name": "keyword.other",
+            "match": "\\b(struct|union)\\b"
+          }
+        ]
+      },
+      "operator": {
+        "patterns": [
+          {
+            "name": "keyword.operator",
+            "match": "->"
+          },
+          {
+            "name": "keyword.operator",
+            "match": "(&&|\\|\\||>>|<<|==|!=|<=|>=)"
+          },
+          {
+            "name": "keyword.operator",
+            "match": "(&|\\||>|<|=|\\+|-|\\*|/|%|\\^|!|~|\\?|\\.|,|:|;)"
+          }
+        ]
+      },
+      "brace": {
+        "patterns": [
+          {
+            "name": "punctuation",
+            "match": "(\\{|\\}|\\[|\\]|\\(|\\))"
+          }
+        ]
+      },
+      "int": {
+        "patterns": [{
+          "name": "constant.numeric",
+          "match": "[0-9]+|0[xX][0-9a-fA-F]+"
+        }]
+      },
+      "strings": {
+        "name": "string.quoted.double.bpftrace",
+        "begin": "\"",
+        "end": "\"",
+        "patterns": [
+          {
+            "name": "constant.character.escape.bpftrace",
+            "match": "\\\\."
+          }
+        ]
+      }
+    }
+  }

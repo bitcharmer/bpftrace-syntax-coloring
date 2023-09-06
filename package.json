@@ -1,0 +1,26 @@
+{
+    "name": "bpftrace-syntax-coloring",
+    "displayName": "bpftrace syntax coloring",
+    "description": "Syntax colouring for bpftrace",
+    "version": "0.0.1",
+    "publisher": "bitcharmer",
+    "engines": {
+        "vscode": "^1.28.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+       "grammars": [{
+            "language": "bpftrace",
+            "scopeName": "source.bt",
+            "path": "./syntaxes/bpftrace.tmLanguage.json"
+        }],
+        "languages": [
+            {
+                "id": "bpftrace",
+                "extensions": ["bt"]
+            }
+        ]        
+    }
+}

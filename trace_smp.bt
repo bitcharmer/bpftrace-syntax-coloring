@@ -1,0 +1,26 @@
+// This script takes one argument which is the number of the cpu to probe (default: 0)
+
+kprobe:smp_call_function_single_interrupt /cpu == $1/
+{
+	@smp_interrupt_begin = nsecs;
+}
+
+
+kprobe:flush_smp_call_function_queue+53 /cpu == $1/ 
+{
+	@func_call_begin = nsecs;
+	@func_ptr = reg("dx");
+}
+
+
+kprobe:flush_smp_call_function_queue+58 /cpu == $1/ 
+{
+	@func_call_end = nsecs; 
+}
+
+
+kretprobe:smp_call_function_single_interrupt /cpu == $1/
+{
+	$now = nsecs;
+	@results[$now] = (ksym(@func_ptr), @func_call_end - @func_call_begin, $now - @smp_interrupt_begin, nsecs % 1000);
+}
